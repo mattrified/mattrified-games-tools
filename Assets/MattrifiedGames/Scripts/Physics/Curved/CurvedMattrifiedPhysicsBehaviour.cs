@@ -186,7 +186,7 @@ public class CurvedMattrifiedPhysicsBehaviour : MattrifiedPhysicsBehaviour
 
     private void FindCurveSlow()
     {
-        InGameCurve[] curves = FindObjectsOfType<InGameCurve>();
+        InGameCurve[] curves = FindObjectsByType<InGameCurve>(FindObjectsSortMode.None);
         for (int i = 0, iLen = curves.Length; i < iLen; i++)
         {
             if (curves[i].curveID == startingPathIndex.Value)

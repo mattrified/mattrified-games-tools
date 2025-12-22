@@ -1,37 +1,38 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuPanelAttractor : MonoBehaviour
+namespace MattrifiedGames.MenuSystem
 {
-    public Transform t;
-
-    public MenuPanel panel;
-
-    public MenuElementBase element;
-    public Transform otherTransform;
-
-    Vector3 vel;
-    public float smoothTime;
-
-    // Start is called before the first frame update
-    void Start()
+    public class MenuPanelAttractor : MonoBehaviour
     {
-        element = panel.ActiveElement;
-        otherTransform = element.transform;
-        t.position = otherTransform.position;
-    }
+        public Transform t;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (element.GetInstanceID() != panel.ActiveElement.GetInstanceID())
+        public MenuPanel panel;
+
+        public MenuElementBase element;
+        public Transform otherTransform;
+
+        Vector3 vel;
+        public float smoothTime;
+
+        // Start is called before the first frame update
+        void Start()
         {
-            otherTransform = panel.ActiveElement.transform;
             element = panel.ActiveElement;
+            otherTransform = element.transform;
+            t.position = otherTransform.position;
         }
 
-        t.position = Vector3.SmoothDamp(t.position, otherTransform.position, ref vel, smoothTime);
-        
+        // Update is called once per frame
+        void Update()
+        {
+            if (element.GetInstanceID() != panel.ActiveElement.GetInstanceID())
+            {
+                otherTransform = panel.ActiveElement.transform;
+                element = panel.ActiveElement;
+            }
+
+            t.position = Vector3.SmoothDamp(t.position, otherTransform.position, ref vel, smoothTime);
+
+        }
     }
 }

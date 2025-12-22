@@ -1,54 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class MenuElementReactorBase : MonoBehaviour
+namespace MattrifiedGames.MenuSystem
 {
-
-    public MenuSystemBase menuSystem;
-    public MenuPanel panel;
-    public MenuElementBase element;
-
-    public bool alwaysHighlight;
-
-    protected virtual void OnValidate()
+    [Tooltip("MonoBehaviour that test if the object is currently highlighted and react / updated it accordingly.")]
+    public abstract class MenuElementReactorBase : MonoBehaviour
     {
-        if (menuSystem == null)
-            menuSystem = GetComponentInParent<MenuSystemBase>();
+        [Tooltip("Reference to the menu system used to test this element reactor.")]
+        public MenuSystemBase menuSystem;
 
-        if (panel == null)
-            panel = GetComponentInParent<MenuPanel>();
+        [Tooltip("The MenuPanel that contains this reactor.")]
+        public MenuPanel panel;
 
-        if (element == null)
-            element = GetComponent<MenuElementBase>();
+        [Tooltip("The Element controlling this reactor.")]
+        public MenuElementBase element;
+
+        [Tooltip("If true, this element will always highlight.")]
+        public bool alwaysHighlight;
+
+        protected virtual void OnValidate()
+        {
+            if (menuSystem == null)
+                menuSystem = GetComponentInParent<MenuSystemBase>();
+
+            if (panel == null)
+                panel = GetComponentInParent<MenuPanel>();
+
+            if (element == null)
+                element = GetComponent<MenuElementBase>();
+        }
+
+        private void Update()
+        {
+            if (alwaysHighlight)
+            {
+                OnHighlighted();
+                return;
+            }
+
+            if (menuSystem.LockedAndLockTicks)
+                return;
+
+            if (menuSystem.CurrentPanelInstanceID != panel.GetInstanceID())
+            {
+                OnUnhighlighted();
+                return;
+            }
+
+            if (menuSystem.CurrentPanel.ActiveElement.GetInstanceID() == element.GetInstanceID())
+            {
+                OnHighlighted();
+            }
+            else
+            {
+                OnUnhighlighted();
+            }
+        }
+        public abstract void OnUnhighlighted();
+        public abstract void OnHighlighted();
     }
-
-    private void Update()
-    {
-        if (alwaysHighlight)
-        {
-            OnHighlighted();
-            return;
-        }
-
-        if (menuSystem.TestAllLocks)
-            return;
-
-        if (menuSystem.CurrentPanel.GetInstanceID() != panel.GetInstanceID())
-        {
-            OnUnhighlighted();
-            return;
-        }
-
-        if (menuSystem.CurrentPanel.ActiveElement.GetInstanceID() == element.GetInstanceID())
-        {
-            OnHighlighted();
-        }
-        else
-        {
-            OnUnhighlighted();
-        }
-    }
-    public abstract void OnUnhighlighted();
-    public abstract void OnHighlighted();
 }

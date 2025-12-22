@@ -13,8 +13,8 @@ namespace MattrifiedGames.MGTweening
         public float rate;
         public AnimationCurve curve;
 
-        public ConditionalUnityEvent onReachStartEvent;
-        public ConditionalUnityEvent onReachEndEvent;
+        public UnityEvent onReachStartEvent;
+        public UnityEvent onReachEndEvent;
 
         [ContextMenu("Make Infinite")]
         public void MakeInfinite()
@@ -40,10 +40,10 @@ namespace MattrifiedGames.MGTweening
                 UpdateTween();
 
                 if (Mathf.Approximately(tweenValue.Value, tweenValue.Min))
-                    onReachStartEvent.value.Invoke();
+                    onReachStartEvent.Invoke();
 
                 if (Mathf.Approximately(tweenValue.Value, tweenValue.Max))
-                    onReachEndEvent.value.Invoke();
+                    onReachEndEvent.Invoke();
             }
         }
 

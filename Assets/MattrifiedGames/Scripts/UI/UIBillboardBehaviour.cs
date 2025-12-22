@@ -17,7 +17,7 @@ public class UIBillboardBehaviour : MonoBehaviour
         var eof = new WaitForEndOfFrame();
         while ((object)cam == null)
         {
-            cam = FindObjectOfType<Camera>();
+            cam = FindFirstObjectByType<Camera>();
             yield return eof;
         }
         cameraTransform = cam.transform;

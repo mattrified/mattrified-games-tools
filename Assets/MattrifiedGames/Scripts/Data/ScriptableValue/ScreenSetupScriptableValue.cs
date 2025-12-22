@@ -17,6 +17,7 @@ namespace MattrifiedGames.SVData
             {
                 base.Value = value;
 
+                
                 Screen.SetResolution(_value.width, _value.height, _value.fullScreenMode, _value.preferredRefreshRate);
                 QualitySettings.vSyncCount = _value.vSyncValue;
 
@@ -76,7 +77,7 @@ namespace MattrifiedGames.SVData
             switch (Value.vSyncValue)
             {
                 case 0: return "Off";
-                default: return (Screen.currentResolution.refreshRate / Value.vSyncValue).ToString() + " Hz";
+                default: return (Screen.currentResolution.refreshRateRatio.value).ToString() + " Hz";
             }
         }
 
@@ -104,7 +105,7 @@ namespace MattrifiedGames.SVData
             v.height = r.height;
 
             if (assignRefreshRate)
-                v.preferredRefreshRate = r.refreshRate;
+                v.preferredRefreshRate = r.refreshRateRatio;
 
             Value = v;
         }
@@ -171,7 +172,7 @@ namespace MattrifiedGames.SVData
         public int width;
         public int height;
 
-        public int preferredRefreshRate;
+        public RefreshRate preferredRefreshRate;
 
         public FullScreenMode fullScreenMode;
         public int vSyncValue;

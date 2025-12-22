@@ -1,39 +1,39 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class PanelEffectorCanvasFade : PanelEffectorBase
+namespace MattrifiedGames.MenuSystem
 {
-    public CanvasGroup canvas;
-    public float fadeInRate = 0.25f;
-    public float fadeOutRate = 0.25f;
-    float fadeVelocity;
-
-    private void Start()
+    public class PanelEffectorCanvasFade : PanelEffectorBase
     {
-        bool? result = TestPanel();
-        if (result == true)
-            canvas.alpha = 1f;
-        else if (result == false)
-            canvas.alpha = 0f;
-    }
+        public CanvasGroup canvas;
+        public float fadeInRate = 0.25f;
+        public float fadeOutRate = 0.25f;
+        float fadeVelocity;
 
-    public override void OnPanelActive()
-    {
-        FadeCanvas(1f, fadeInRate);
-    }
+        private void Start()
+        {
+            bool? result = TestPanel();
+            if (result == true)
+                canvas.alpha = 1f;
+            else if (result == false)
+                canvas.alpha = 0f;
+        }
 
-    public override void OnPanelInactive()
-    {
-        FadeCanvas(0f, fadeOutRate);
-    }
+        public override void OnPanelActive()
+        {
+            FadeCanvas(1f, fadeInRate);
+        }
 
-    private void FadeCanvas(float alpha, float rate)
-    {
-        float oldA = canvas.alpha;
-        float newA = Mathf.SmoothDamp(oldA, alpha, ref fadeVelocity, rate);
-        if (newA != oldA)
-            canvas.alpha = newA;
+        public override void OnPanelInactive()
+        {
+            FadeCanvas(0f, fadeOutRate);
+        }
+
+        private void FadeCanvas(float alpha, float rate)
+        {
+            float oldA = canvas.alpha;
+            float newA = Mathf.SmoothDamp(oldA, alpha, ref fadeVelocity, rate);
+            if (newA != oldA)
+                canvas.alpha = newA;
+        }
     }
 }

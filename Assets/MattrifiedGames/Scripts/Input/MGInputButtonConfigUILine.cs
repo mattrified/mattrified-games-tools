@@ -1,84 +1,84 @@
-using MattrifiedGames.SVData;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using MattrifiedGames.MenuSystem;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
 
-public class MGInputButtonConfigUILine : MenuElementBase
+namespace MattrifiedGames.ButtonConfig
 {
-    public string inputID;
-
-    public TextMeshProUGUI headerText;
-    public TextMeshProUGUI spriteText;
-
-    public BtnConfigLineInfo info;
-
-    static readonly Color highlightColor = Color.white;
-    static readonly Color unhighlightColor = Color.gray;
-
-    public enum BtnConfigLineInfo
+    public class MGInputButtonConfigUILine : MenuElementBase
     {
-        NA = 0,
-        KeyboardOnly = 1,
-        KeyboardEdit = 2,
-        Reset = 3,
-        Exit = 4,
-        Test = 5,
+        public string inputID;
 
-    }
-    public virtual void OnValidate()
-    {
-        inputID = name;
-        headerText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        spriteText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-    }
+        public TextMeshProUGUI headerText;
+        public TextMeshProUGUI spriteText;
 
-    protected override void Start()
-    {
-        base.Start();
-        headerText.color = unhighlightColor;
-    }
+        public BtnConfigLineInfo info;
 
-    public override void OnHighlight()
-    {
-        headerText.color = highlightColor;
-        base.OnHighlight();
-    }
+        static readonly Color highlightColor = Color.white;
+        static readonly Color unhighlightColor = Color.gray;
 
-    public override void OnUnhighlight()
-    {
-        headerText.color = unhighlightColor;
-        base.OnUnhighlight();
-    }
-
-    internal void SetInfo(MGInput input, MGInputSpriteMapping spriteMapping)
-    {
-        if (info >= BtnConfigLineInfo.KeyboardEdit)
+        public enum BtnConfigLineInfo
         {
-            return;
+            NA = 0,
+            KeyboardOnly = 1,
+            KeyboardEdit = 2,
+            Reset = 3,
+            Exit = 4,
+            Test = 5,
+
+        }
+        public virtual void OnValidate()
+        {
+            inputID = name;
+            headerText = transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            spriteText = transform.GetChild(1).GetComponent<TextMeshProUGUI>();
         }
 
-        string s = string.Empty;
-        if (input.mainInputSet.TryAndFind(inputID, out MGInputInfo result))
+        protected override void Start()
         {
-            if (input.device is Keyboard)
-            {
-                foreach (Key k in result.key)
-                {
-                    s += spriteMapping[k] + "   ";
-                }
-            }
-            else
-            {
-                foreach (GamepadButton btn in result.gpButton)
-                {
-                    s += spriteMapping[btn] + "   ";
-                }
-            }
+            base.Start();
+            headerText.color = unhighlightColor;
         }
-        spriteText.text = s;
+
+        public override void OnHighlight()
+        {
+            headerText.color = highlightColor;
+            base.OnHighlight();
+        }
+
+        public override void OnUnhighlight()
+        {
+            headerText.color = unhighlightColor;
+            base.OnUnhighlight();
+        }
+
+        internal void SetInfo(MGInput input, MGInputSpriteMapping spriteMapping)
+        {
+            if (info >= BtnConfigLineInfo.KeyboardEdit)
+            {
+                return;
+            }
+
+            string s = string.Empty;
+            if (input.mainInputSet.TryAndFind(inputID, out MGInputInfo result))
+            {
+                if (input.device is Keyboard)
+                {
+                    foreach (Key k in result.key)
+                    {
+                        s += spriteMapping[k] + "   ";
+                    }
+                }
+                else
+                {
+                    foreach (GamepadButton btn in result.gpButton)
+                    {
+                        s += spriteMapping[btn] + "   ";
+                    }
+                }
+            }
+            spriteText.text = s;
+        }
     }
 }

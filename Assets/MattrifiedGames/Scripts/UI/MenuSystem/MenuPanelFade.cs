@@ -1,66 +1,66 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System;
-using UnityEngine.Events;
 
-public class MenuPanelFade : MenuPanel
+namespace MattrifiedGames.MenuSystem
 {
-    [SerializeField()]
-    CanvasGroup canvas;
-
-    [SerializeField()]
-    float alpha = 0f;
-
-    public float rate = 2f;
-
-    bool? fading;
-
-    private void Awake()
+    public class MenuPanelFade : MenuPanel
     {
-        canvas.alpha = alpha;
-    }
+        [SerializeField()]
+        CanvasGroup canvas;
 
-    public override void Open(MenuSystemBase menu)
-    {
-        fading = true;
-        Locked = true;
-        alpha = Mathf.Clamp01(alpha);
-        base.Open(menu);
-    }
+        [SerializeField()]
+        float alpha = 0f;
 
-    public override void Close(MenuSystemBase menu)
-    {
-        fading = false;
-        Locked = true;
-        alpha = Mathf.Clamp01(alpha);
-        base.Close(menu);
-    }
+        public float rate = 2f;
 
-    private void Update()
-    {
-        if (!fading.HasValue)
+        bool? fading;
+
+        private void Awake()
         {
-            return;
+            canvas.alpha = alpha;
         }
-        else if (fading.Value)
+
+        public override void Open(MenuSystemBase menu)
         {
-            alpha += Time.deltaTime * rate;
-            if (alpha >= 1f)
+            fading = true;
+            Locked = true;
+            alpha = Mathf.Clamp01(alpha);
+            base.Open(menu);
+        }
+
+        public override void Close(MenuSystemBase menu)
+        {
+            fading = false;
+            Locked = true;
+            alpha = Mathf.Clamp01(alpha);
+            base.Close(menu);
+        }
+
+        private void Update()
+        {
+            if (!fading.HasValue)
             {
-                Locked = false;
-                fading = null;
+                return;
             }
-        }
-        else
-        {
-            alpha -= Time.deltaTime * rate;
-            if (alpha <= 0)
+            else if (fading.Value)
             {
-                Locked = false;
-                fading = null;
+                alpha += Time.deltaTime * rate;
+                if (alpha >= 1f)
+                {
+                    Locked = false;
+                    fading = null;
+                }
             }
-        }
+            else
+            {
+                alpha -= Time.deltaTime * rate;
+                if (alpha <= 0)
+                {
+                    Locked = false;
+                    fading = null;
+                }
+            }
 
-        canvas.alpha = alpha;
+            canvas.alpha = alpha;
+        }
     }
 }
