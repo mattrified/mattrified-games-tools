@@ -1,0 +1,20 @@
+{
+  "name": "com.mattrifiedgames.mattrified-games-tools",
+  "version": "0.1.0",
+  "displayName": "Mattrified Games Tools",
+  "description": "A collection of scripts and tools used by Mattrified Games.",
+  "unity": "2021.3",
+  "dependencies": {
+    "com.unity.modules.ui": "1.0.0",
+	"com.unity.inputsystem": "1.14.2"
+  },
+  "keywords": [
+    "unity",
+    "package"
+  ],
+  "author": {
+    "name": "Mattrified Games",
+    "url": "https://www.mattrifiedgames.com"
+  },
+  "license": "MIT"
+}
