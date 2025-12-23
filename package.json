@@ -2,8 +2,8 @@
   "name": "com.mattrifiedgames.mattrified-games-tools",
   "version": "0.1.0",
   "displayName": "Mattrified Games Tools",
-  "description": "A collection of scripts and tools used by Mattrified Games.",
-  "unity": "2021.3",
+  "description": "A collection of classes, systems, and tools I used for my projects such as Merfight and Battle High 2 A+ XChange. ",
+  "unity": "6000.0",
   "dependencies": {
     "com.unity.modules.ui": "1.0.0",
 	"com.unity.inputsystem": "1.14.2"
